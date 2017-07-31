@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//source/uniandes/cupi2/cupiEmail/servidor/interfaz/InterfazCupiEmail.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/interfaz/PanelInformacionUsuarios.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/interfaz/PanelOpcionesServidor.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/interfaz/PanelUsuarios.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/mundo/AdministradorBD.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/mundo/Atender.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/mundo/ClienteRemoto.java=UTF-8
+encoding//source/uniandes/cupi2/cupiEmail/servidor/mundo/CupiEmail.java=UTF-8
+encoding/<project>=ISO-8859-1

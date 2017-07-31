@@ -1,0 +1,19 @@
+Reporte reservas hechas
+Thu Feb 18 05:36:00 COT 2016
+==============================================================
+Cédula cliente: 123
+Nombre cliente: Juan
+Total personas en el viaje: 2
+Noches de estadia: 3
+Aerolinea: Avianca
+Nombre del hotel: Hotel las Américas
+Fecha de llegada: Wed Mar 02 05:33:29 COT 2016
+Costo total de la reserva: 450000.0
+Cédula cliente: 456
+Nombre cliente: Pedro
+Total personas en el viaje: 4
+Noches de estadia: 5
+Aerolinea: Avianca
+Nombre del hotel: Hilton Lima Miraflores
+Fecha de llegada: Thu Mar 03 05:34:41 COT 2016
+Costo total de la reserva: 2469215.0

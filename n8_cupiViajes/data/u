@@ -1,0 +1,25 @@
+==============================================================
+Reporte reservas
+==============================================================
+Reserva No. 1:
+Nombre hotel: Hotel las Am�ricas
+ID Cliente: 2
+Fecha llegada: Sat Mar 04 11:15:46 COT 2017
+Nombre cliente: r
+Noches estadía: 5
+Cantidad adultos: 1
+Cantidad niños: 0
+Aerolínea: Avianca
+Costo total reserva: 750000.0
+==============================================================
+Reserva No. 2:
+Nombre hotel: Royal Decameron Bar�
+ID Cliente: 5
+Fecha llegada: Tue Apr 03 11:16:02 COT 2018
+Nombre cliente: t
+Noches estadía: 5
+Cantidad adultos: 1
+Cantidad niños: 0
+Aerolínea: Avianca
+Costo total reserva: 4390625.0
+==============================================================

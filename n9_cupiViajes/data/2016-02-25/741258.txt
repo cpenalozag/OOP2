@@ -1,0 +1,11 @@
+==============================================================
+CupiViajes
+NIT: 123456789
+Factura reserva: 741258
+==============================================================
+
+Cliente: Juan
+total personas: 13
+Duración: 4 días 5 noches
+Total a pagar:
+/t/t750000.0

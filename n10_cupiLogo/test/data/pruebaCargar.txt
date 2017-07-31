@@ -1,0 +1,6 @@
+5
+modificarPintando 1
+modificarPintando 0
+desplazar 50.0 0
+girar 90.0 0
+desplazar 50.0 0

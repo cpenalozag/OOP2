@@ -1,0 +1,14 @@
+Planta
+Fuego
+Agua
+Insecto
+Normal
+Veneno
+Electrico
+Tierra
+Pelea
+Psiquico
+Roca
+Fantasma
+Hielo
+Dragon

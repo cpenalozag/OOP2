@@ -1,0 +1,225 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación 
+ * Licenciado bajo el esquema Academic Free License version 2.1 
+ *
+ * Proyecto Cupi2 (http://cupi2.uniandes.edu.co)
+ * Ejercicio: n7_cupiViajes
+ * Autor: Equipo Cupi2 2015
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ */
+package uniandes.cupi2.cupiViajes.test;
+
+import junit.framework.TestCase;
+import uniandes.cupi2.cupiViajes.mundo.Fecha;
+import uniandes.cupi2.cupiViajes.mundo.Hotel;
+import uniandes.cupi2.cupiViajes.mundo.ReservaViaje;
+
+/**
+ * Clase usada para verificar que los métodos de la clase ReservaViaje están correctamente implementados.
+ */
+public class ReservaViajeTest extends TestCase
+{
+    // -------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------
+
+    /**
+     * Clase donde se harán las pruebas.
+     */
+    private ReservaViaje reserva1;
+
+    // -------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------
+
+    /**
+     * Escenario 1: Construye una reserva de viaje.
+     */
+    public void setupEscenario1( )
+    {
+        Hotel hotelReserva = new Hotel( "Hilton Cartagena", "Cartagena", 5, 390000, "Imagen" );
+        Fecha fechaLlegada = new Fecha( 17, 01, 2016 );
+        reserva1 = new ReservaViaje( "Pepe", 4, 0, 3, ReservaViaje.AVIANCA, hotelReserva, fechaLlegada );
+    }
+
+    /**
+     * Prueba 1: Se encarga de verificar el método constructor de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * ReservaViaje<br>
+     * darCliente<br>
+     * darCantidadAdultos<br>
+     * darCantidadNinios<br>
+     * darDiasEstadia<br>
+     * darAerolinea<br>
+     * darHotel<br>
+     * darFechaLlegada<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Construye correctamente la reserva, cada uno de los valores corresponde al esperado.<br>
+     */
+    public void testReservaViaje( )
+    {
+        setupEscenario1( );
+
+        assertNotNull( "El nombre del cliente que hizo la reserva no puede ser null.", reserva1.darNombreCliente( ) );
+        assertEquals( "El nombre del cliente de la reserva no fue inicializado correctamente.", "Pepe", reserva1.darNombreCliente( ) );
+
+        assertEquals( "La cantidad de adultos no se inicializó correctamente, debería haber 4 adultos en la reserva.", 4, reserva1.darCantidadAdultos( ) );
+        assertEquals( "La cantidad de niños no se incializó correctamente, no debería haber niños en la reserva. ", 0, reserva1.darCantidadNinios( ) );
+        assertEquals( "La cantidad de días de estadía no se inicializó correctamente, la reserva se hizo por 3 días.", 3, reserva1.darCantidadNochesEstadia( ) );
+
+        assertNotNull( "La aerolínea que se va a reservar no puede ser null.", reserva1.darAerolinea( ) );
+        assertEquals( "La aerolínea no se inicializó correctamente.", "Avianca", reserva1.darAerolinea( ) );
+
+        assertNotNull( "La reserva debería tener un hotel asociado.", reserva1.darHotel( ) );
+        assertEquals( "El hotel no fue inicializado correctamente.", "Hilton Cartagena", reserva1.darHotel( ).darNombre( ) );
+
+        assertNotNull( "La reserva debería tener una fecha de llegada.", reserva1.darFechaLlegada( ) );
+        assertEquals( "La fecha no fue inicializada correctamente.", 17, reserva1.darFechaLlegada( ).darDia( ) );
+    }
+
+    /**
+     * Prueba 2: Se encarga de verificar el método compararPorCliente de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * compararPorCliente<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. La reserva1 y reserva2 tienen el mismo cliente.<br>
+     * 2. La reserva1 es menor a la reserva2 con respecto al nombre del cliente.<br>
+     * 3. La reserva1 es mayor a la reserva2 con respecto al nombre del cliente.
+     */
+    public void testCompararPorCliente( )
+    {
+        setupEscenario1( );
+
+        Hotel hotel = new Hotel( "Hotel", "Ciudad", 0, 1, "Imagen" );
+        Fecha fecha = new Fecha( 10, 10, 2010 );
+
+        // Caso de prueba 1
+        ReservaViaje reserva2 = new ReservaViaje( "Pepe", 1, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        int resultadoComparacion = reserva1.compararPorCliente( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen el mismo cliente.", 0, resultadoComparacion );
+
+        // Caso de prueba 2
+        reserva2 = new ReservaViaje( "Ricardo", 1, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCliente( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva es mayor en cuanto al nombre del cliente.", -1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Pipe", 1, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCliente( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva es mayor en cuanto al nombre del cliente.", -1, resultadoComparacion );
+
+        // Caso de prueba 3
+        reserva2 = new ReservaViaje( "Juan", 1, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCliente( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva es menor en cuanto al nombre del cliente.", 1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Pablo", 1, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCliente( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva es menor en cuanto al nombre del cliente.", 1, resultadoComparacion );
+    }
+
+    /**
+     * Prueba 3: Se encarga de verificar el método compararPorCantidadDePersonas de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * compararPorCantidadDePersonas<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. La reserva1 y la reserva2 tienen la misma cantidad de personas.<br>
+     * 2. La reserva1 es menor a la reserva2 con respecto a la cantidad de personas.<br>
+     * 3. La reserva1 es mayor a la reserva3 con respecto a la cantidad de personas.
+     */
+    public void testCompararPorCantidadDePersonas( )
+    {
+        setupEscenario1( );
+
+        Hotel hotel = new Hotel( "Hotel", "Ciudad", 0, 1, "Imagen" );
+        Fecha fecha = new Fecha( 10, 10, 2010 );
+
+        // Caso de prueba 1
+        ReservaViaje reserva2 = new ReservaViaje( "Cliente", 4, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        int resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen la misma cantidad de personas que van a viajar.", 0, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 0, 4, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen la misma cantidad de personas que van a viajar.", 0, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 2, 2, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen la misma cantidad de personas que van a viajar.", 0, resultadoComparacion );
+
+        // Caso de prueba 2
+        reserva2 = new ReservaViaje( "Cliente", 4, 4, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva tiene mayor cantidad de personas que van a viajar.", -1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 1, 4, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva tiene mayor cantidad de personas que van a viajar.", -1, resultadoComparacion );
+
+        // Caso de prueba 3
+        reserva2 = new ReservaViaje( "Cliente", 3, 0, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva tiene menor cantidad de personas que van a viajar.", 1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 1, 2, 1, ReservaViaje.AVIANCA, hotel, fecha );
+        resultadoComparacion = reserva1.compararPorCantidadDePersonas( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva tiene menor cantidad de personas que van a viajar.", 1, resultadoComparacion );
+    }
+
+    /**
+     * Prueba 4: Se encarga de verificar el método compararPorCostoTotal de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * compararPorCostoTotal<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. La reserva1 y la reserva2 tienen el mismo costo total.<br>
+     * 2. La reserva1 es menor a la reserva2 con respecto al costo total.<br>
+     * 3. La reserva1 es mayor a la reserva2 con respecto al costo total.
+     */
+    public void testComaprarPorCostoTotal( )
+    {
+        setupEscenario1( );
+
+        Hotel hotel1 = new Hotel( "Hotel", "Ciudad", 0, 390000, "Imagen" );
+        Hotel hotel2 = new Hotel( "Hotel2", "Ciudad", 0, 292500, "Imagen" );
+        Fecha fecha = new Fecha( 10, 10, 2010 );
+
+        // Caso de prueba 1
+        ReservaViaje reserva2 = new ReservaViaje( "Cliente", 4, 0, 3, ReservaViaje.AVIANCA, hotel1, fecha );
+        int resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen el mismo costo total.", 0, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 4, 0, 4, ReservaViaje.AVIANCA, hotel2, fecha );
+        resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 0 porque las dos reservas tienen el mismo costo total.", 0, resultadoComparacion );
+
+        // Caso de prueba 2
+        reserva2 = new ReservaViaje( "Cliente", 4, 0, 5, ReservaViaje.AVIANCA, hotel1, fecha );
+        resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva tiene mayor costo total.", -1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 4, 0, 5, ReservaViaje.AVIANCA, hotel2, fecha );
+        resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar -1 porque la otra reserva tiene mayor costo total.", -1, resultadoComparacion );
+
+        // Caso de prueba 3assertEquals( "El formato del toString no es el esperado.", reserva1.darNombreCliente( ) + " (" + reserva1.darHotel( ) + ")", reserva1.toString( ) );
+        reserva2 = new ReservaViaje( "Cliente", 4, 0, 1, ReservaViaje.AVIANCA, hotel1, fecha );
+        resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva tiene menor costo total.", 1, resultadoComparacion );
+
+        reserva2 = new ReservaViaje( "Cliente", 4, 0, 1, ReservaViaje.AVIANCA, hotel2, fecha );
+        resultadoComparacion = reserva1.compararPorCostoTotal( reserva2 );
+        assertEquals( "El resultado de la comparación debería dar 1 porque la otra reserva tiene menor costo total.", 1, resultadoComparacion );
+    }
+
+    /**
+     * Prueba 5: Se encarga de verificar el método toString de la clase. <br>
+     * <b> Métodos a probar: </b> toString <br>
+     * <b> Casos de prueba: </b> 1. El formato de texto es el correcto.
+     */
+    public void testToString( )
+    {
+        setupEscenario1( );
+        assertEquals( "El formato del toString no es el esperado.", "Pepe (Hilton Cartagena)", reserva1.toString( ) );
+    }
+
+}

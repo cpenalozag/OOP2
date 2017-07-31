@@ -1,0 +1,98 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación 
+ * Licenciado bajo el esquema Academic Free License version 2.1 
+ *
+ * Proyecto Cupi2 (http://cupi2.uniandes.edu.co)
+ * Ejercicio: n7_cupiViajes
+ * Autor: Equipo Cupi2 2015
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ */
+package uniandes.cupi2.cupiViajes.test;
+
+import uniandes.cupi2.cupiViajes.mundo.Fecha;
+import junit.framework.TestCase;
+
+/**
+ * Clase usada para verificar que los métodos de la clase Fecha están correctamente implementados.
+ */
+public class FechaTest extends TestCase
+{
+    // -------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------
+
+    /**
+     * Clase donde se harán las pruebas.
+     */
+    private Fecha fecha1;
+    
+    // -------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------
+
+    /**
+     * Escenario 1: Construye una fecha.
+     */
+    public void setupEscenario1( )
+    {
+        fecha1 = new Fecha( 25, 07, 2015 );
+    }
+    
+    /**
+     * Prueba 1: Se encarga de verificar el método constructor de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * Fecha<br>
+     * darDia<br>
+     * darMes<br>
+     * darAnio
+     * <b> Casos de prueba:</b><br>
+     * 1. Construye correctamente la fecha, cada uno de los valores corresponde al esperado.<br>
+     */
+    public void testFecha( )
+    {
+        setupEscenario1( );
+        
+        assertEquals( "El día no fue inicializado correctamente.", 25, fecha1.darDia( ) );
+        assertEquals( "El mes no fue inicializado correctamente.", 7, fecha1.darMes( ) );
+        assertEquals( "El año no fue inicializado correctamente.", 2015, fecha1.darAnio( ) );
+    }
+    
+    /**
+     * Prueba 2: Se encarga de verificar el método comparar de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * comparar<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Fecha1 y fecha2 son iguales.<br>
+     * 2. Fecha1 es más antigua que fecha2.<br>
+     * 3. Fecha1 es más reciente que fecha2.
+     */
+    public void testComparar( )
+    {
+        setupEscenario1( );
+        
+        // Caso de prueba 1.
+        Fecha fecha2 = new Fecha( 25, 07, 2015 );
+        int resultadoComparacion = fecha1.comparar( fecha2 );
+        assertEquals( "El resultado de la comparación debería dar 0: las dos fechas son iguales.", 0, resultadoComparacion );
+        
+        // Caso de prueba 2.
+        fecha2 = new Fecha( 30, 12, 2015 );
+        resultadoComparacion = fecha1.comparar( fecha2 );
+        assertEquals( "El resultado de la comparación debería dar 1: las dos fechas son iguales.", 1, resultadoComparacion );
+        
+        fecha2 = new Fecha( 26, 07, 2015 );
+        resultadoComparacion = fecha1.comparar( fecha2 );
+        assertEquals( "El resultado de la comparación debería dar 1: las dos fechas son iguales.", 1, resultadoComparacion );
+        
+        // Caso de prueba 3.
+        fecha2 = new Fecha( 30, 12, 1990 );
+        resultadoComparacion = fecha1.comparar( fecha2 );
+        assertEquals( "El resultado de la comparación debería dar -1: las dos fechas son iguales.", -1, resultadoComparacion );
+        
+        fecha2 = new Fecha( 24, 07, 2015 );
+        resultadoComparacion = fecha1.comparar( fecha2 );
+        assertEquals( "El resultado de la comparación debería dar 1: las dos fechas son iguales.", -1, resultadoComparacion );
+    }
+
+}

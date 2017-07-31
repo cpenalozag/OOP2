@@ -1,0 +1,419 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación 
+ * Licenciado bajo el esquema Academic Free License version 2.1 
+ *
+ * Proyecto Cupi2 (http://cupi2.uniandes.edu.co)
+ * Ejercicio: n7_cupiViajes
+ * Autor: Equipo Cupi2 2015
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ */
+package uniandes.cupi2.cupiViajes.test;
+
+import java.util.ArrayList;
+
+import uniandes.cupi2.cupiViajes.mundo.CupiViajes;
+import uniandes.cupi2.cupiViajes.mundo.Hotel;
+import uniandes.cupi2.cupiViajes.mundo.ReservaViaje;
+import junit.framework.TestCase;
+
+/**
+ * Clase usada para verificar que los métodos de la clase CupiViajes están correctamente implementados.
+ */
+public class CupiViajesTest extends TestCase
+{
+    // -------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------
+
+    /**
+     * Clase donde se harán las pruebas.
+     */
+    private CupiViajes cupiViajes;
+
+    // -------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------
+
+    /**
+     * Escenario 1: Construye el sistema de viajes sin reservas.
+     */
+    public void setupEscenario1( )
+    {
+        cupiViajes = new CupiViajes( );
+    }
+
+    /**
+     * Escenario 2: Construye el sistema de viajes con tres reservas.
+     */
+    public void setupEscenario2( )
+    {
+        cupiViajes = new CupiViajes( );
+
+        Hotel hotel1 = new Hotel( "Nombre1", "Ciudad1", 5, 500000, "Imagen1" );
+        Hotel hotel2 = new Hotel( "Nombre2", "Ciudad2", 3, 250000, "Imagen2" );
+        Hotel hotel3 = new Hotel( "Nombre3", "Ciudad2", 1, 25000, "Imagen3" );
+
+        cupiViajes.agregarHotel( "Nombre1", "Ciudad1", 5, 500000, "Imagen1" );
+        cupiViajes.agregarHotel( "Nombre2", "Ciudad2", 3, 250000, "Imagen2" );
+        cupiViajes.agregarHotel( "Nombre3", "Ciudad2", 1, 25000, "Imagen3" );
+
+        cupiViajes.agregarReserva( hotel1, 5, 1, 2015, "Cliente1", 2, 1, 3, ReservaViaje.AVIANCA );
+        cupiViajes.agregarReserva( hotel2, 10, 12, 2016, "Cliente2", 4, 0, 2, ReservaViaje.IBERIA );
+        cupiViajes.agregarReserva( hotel3, 6, 12, 2016, "Cliente3", 4, 2, 1, ReservaViaje.VIVA_COLOMBIA );
+    }
+
+    /**
+     * Escenario 3: Construye el sistema de viajes con seis reservas.
+     */
+    public void setupEscenario3( )
+    {
+        cupiViajes = new CupiViajes( );
+
+        Hotel hotel1 = new Hotel( "Nombre1", "Ciudad1", 5, 500000, "Imagen1" );
+        Hotel hotel2 = new Hotel( "Nombre2", "Ciudad2", 3, 250000, "Imagen2" );
+        Hotel hotel3 = new Hotel( "Nombre3", "Ciudad2", 1, 25000, "Imagen3" );
+
+        cupiViajes.agregarHotel( "Nombre1", "Ciudad1", 5, 500000, "Imagen1" );
+        cupiViajes.agregarHotel( "Nombre2", "Ciudad2", 3, 250000, "Imagen2" );
+        cupiViajes.agregarHotel( "Nombre3", "Ciudad2", 1, 25000, "Imagen3" );
+
+        cupiViajes.agregarReserva( hotel1, 5, 1, 2015, "Cliente1", 2, 1, 3, ReservaViaje.AVIANCA );
+        cupiViajes.agregarReserva( hotel2, 10, 12, 2016, "Cliente2", 4, 0, 2, ReservaViaje.IBERIA );
+        cupiViajes.agregarReserva( hotel3, 6, 12, 2016, "Cliente3", 4, 2, 1, ReservaViaje.VIVA_COLOMBIA );
+        cupiViajes.agregarReserva( hotel1, 1, 2, 2015, "Cliente12", 3, 1, 6, ReservaViaje.JETBLUE );
+        cupiViajes.agregarReserva( hotel1, 14, 3, 2016, "Cliente22", 2, 2, 3, ReservaViaje.AVIANCA );
+        cupiViajes.agregarReserva( hotel1, 13, 3, 2015, "Cliente32", 5, 0, 7, ReservaViaje.LAN );
+    }
+
+    /**
+     * Prueba 1: Se encarga de verificar el método constructor de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * CupiViajes<br>
+     * darReservas<br>
+     * darHoteles<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Construye correctamente el sistema de CupiViajes, cada uno de los valores corresponde al esperado.<br>
+     */
+    public void testCupiViajes( )
+    {
+        setupEscenario1( );
+
+        assertNotNull( "La lista de reservas no puede ser nula.", cupiViajes.darReservas( ) );
+        assertNotNull( "La lista de hoteles no puede ser nula.", cupiViajes.darHoteles( ) );
+
+        assertEquals( "La lista de reservas se debe inicializar vacía.", 0, cupiViajes.darReservas( ).size( ) );
+        assertEquals( "La lista de hoteles se debe inicializar vacía.", 0, cupiViajes.darHoteles( ).size( ) );
+    }
+
+    /**
+     * Prueba 2: Se encarga de verificar el método agregarHotel de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * agregarHotel<br>
+     * darHoteles<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. No hay hoteles en el sistema.<br>
+     * 2. Hay hoteles en el sistema.
+     */
+    public void testAgregarHotel( )
+    {
+        setupEscenario1( );
+
+        // Caso de prueba 1.
+        cupiViajes.agregarHotel( "Ciudad1", "Nombre1", 5, 600000, "Imagen1" );
+        assertEquals( "Debe haber 1 hotel en el sistema.", 1, cupiViajes.darHoteles( ).size( ) );
+
+        // Caso de prueba 2.
+        cupiViajes.agregarHotel( "Ciudad2", "Nombre2", 3, 200000, "Imagen2" );
+        assertEquals( "Debe haber 2 hotel en el sistema.", 2, cupiViajes.darHoteles( ).size( ) );
+    }
+
+    /**
+     * Prueba 3: Se encarga de verificar el método agregarReserva de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * agregarReserva<br>
+     * darReservas<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Se agrega una reserva cuando no hay reservas en el sistema.<br>
+     */
+    public void testAgregarReserva1( )
+    {
+        setupEscenario1( );
+
+        Hotel hotel1 = new Hotel( "Nombre1", "Ciudad1", 4, 420000, "Imagen1" );
+        cupiViajes.agregarReserva( hotel1, 4, 1, 2016, "Cliente1", 2, 1, 4, ReservaViaje.AVIANCA );
+        assertEquals( "Debe haber 1 reserva en el sistema.", 1, cupiViajes.darReservas( ).size( ) );
+
+        ReservaViaje reserva = ( ReservaViaje )cupiViajes.darReservas( ).get( 0 );
+        assertEquals( "El hotel de la reserva agregada no es el correcto.", "Nombre1", reserva.darHotel( ).darNombre( ) );
+        assertEquals( "El cliente de la reserva es Cliente1.", "Cliente1", reserva.darNombreCliente( ) );
+    }
+
+    /**
+     * Prueba 4: Se encarga de verificar el método agregarReserva de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * agregarReserva<br>
+     * darReservas<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Se agrega una reserva a un cliente que no tiene reserva.<br>
+     * 2. Se agrega una reserva a un cliente que ya tiene reserva.
+     */
+    public void testAgregarReserva2( )
+    {
+        setupEscenario2( );
+
+        // Caso de prueba 1
+        Hotel hotel1 = new Hotel( "Nombre4", "Ciudad4", 4, 420000, "Imagen4" );
+        cupiViajes.agregarReserva( hotel1, 4, 1, 2016, "Cliente4", 2, 1, 4, ReservaViaje.AVIANCA );
+        assertEquals( "Debe haber 4 reserva en el sistema.", 4, cupiViajes.darReservas( ).size( ) );
+
+        ReservaViaje reserva = ( ReservaViaje )cupiViajes.darReservas( ).get( 3 );
+        assertEquals( "El hotel de la reserva agregada no es el correcto.", "Nombre4", reserva.darHotel( ).darNombre( ) );
+        assertEquals( "El cliente de la reserva es Cliente4.", "Cliente4", reserva.darNombreCliente( ) );
+
+        // Caso de prueba 2
+        hotel1 = new Hotel( "Nombre4", "Ciudad4", 4, 420000, "Imagen4" );
+        boolean pudo = cupiViajes.agregarReserva( hotel1, 4, 1, 2016, "Cliente1", 2, 1, 4, ReservaViaje.AVIANCA );
+        assertFalse( "No se debería agregar la reserva. Ya existe una reserva con ese cliente.", pudo );
+    }
+
+    /**
+     * Prueba 5: Se encarga de verificar el método buscarHotelesCiudad de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarHotelesCiudad<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Existen hoteles en la ciudad dada.<br>
+     * 2. No existen hoteles en la ciudad dada.
+     */
+    public void testBuscarHotelesCiudad( )
+    {
+        setupEscenario2( );
+
+        // Caso de prueba 1.
+        ArrayList hoteles = cupiViajes.buscarHotelesCiudad( "Ciudad1" );
+        assertEquals( "Debería existir un hotel en la ciudad 1.", 1, hoteles.size( ) );
+
+        hoteles = cupiViajes.buscarHotelesCiudad( "Ciudad2" );
+        assertEquals( "Debería existir dos hoteles en la ciudad 2.", 2, hoteles.size( ) );
+
+        // Caso de prueba 2.
+        hoteles = cupiViajes.buscarHotelesCiudad( "CiudadNoExiste" );
+        assertEquals( "No deberían existir hoteles en esta ciudad.", 0, hoteles.size( ) );
+    }
+
+    /**
+     * Prueba 6: Se encarga de verificar el método buscarReserva de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReserva<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Existen reservas a nombre del cliente dado.<br>
+     * 2. No existen reservas a nombre del cliente dado.
+     */
+    public void testBuscarReserva( )
+    {
+        setupEscenario3( );
+
+        // Caso de prueba 1.
+        ReservaViaje reserva = cupiViajes.buscarReserva( "Cliente1" );
+        assertNotNull( "Debería existir una reserva a nombre del cliente 1.", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente1", reserva.darNombreCliente( ) );
+
+        reserva = cupiViajes.buscarReserva( "Cliente2" );
+        assertNotNull( "Debería existir una reserva a nombre del cliente 2.", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente2", reserva.darNombreCliente( ) );
+
+        // Caso de prueba 2.
+        reserva = cupiViajes.buscarReserva( "ClienteNoExistente" );
+        assertNull( "No debería existir una reserva a nombre de Cliente No Existente.", reserva );
+    }
+
+    /**
+     * Prueba 7: Se encarga de verificar el método buscarReservaPorClienteBinario de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservaPorClienteBinario<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Existen reservas a nombre del cliente dado.<br>
+     * 2. No existen reservas a nombre del cliente dado.
+     */
+    public void testBuscarReservaPorClienteBinario( )
+    {
+        setupEscenario3( );
+
+        cupiViajes.ordenarReservasPorCliente( );
+
+        // Caso de prueba 1.
+        ReservaViaje reserva = cupiViajes.buscarReservaPorClienteBinario( "Cliente12" );
+        assertNotNull( "Debería existir una reserva a nombre del cliente 12.", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente12", reserva.darNombreCliente( ) );
+
+        reserva = cupiViajes.buscarReservaPorClienteBinario( "Cliente22" );
+        assertNotNull( "Debería existir una reserva a nombre del cliente 22.", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente22", reserva.darNombreCliente( ) );
+
+        // Caso de prueba 2.
+        reserva = cupiViajes.buscarReservaPorClienteBinario( "ClienteNoExistente" );
+        assertNull( "No debería existir una reserva a nombre de Cliente No Existente.", reserva );
+    }
+
+    /**
+     * Prueba 8: Se encarga de verificar el método buscarReservaPorCiudad de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservaPorCiudad<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Existen reservas para un hotel en la ciudad dada.<br>
+     * 2. No existen reservas para un hotel en la ciudad dada.
+     */
+    public void testBuscarReservaPorCiudad( )
+    {
+        setupEscenario3( );
+
+        // Caso de prueba 1.
+        ReservaViaje reserva = cupiViajes.buscarReservaPorCiudad( "Ciudad2" );
+        assertNotNull( "Debería existir una reserva en la ciudad 2", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente2", reserva.darNombreCliente( ) );
+
+        reserva = cupiViajes.buscarReservaPorCiudad( "Ciudad1" );
+        assertNotNull( "Debería existir una reserva en la ciudad 1", reserva );
+        assertEquals( "La reserva retornada no es la buscada.", "Cliente1", reserva.darNombreCliente( ) );
+
+        // Caso de prueba 2.
+        reserva = cupiViajes.buscarReservaPorCiudad( "CiudadNoExistente" );
+        assertNull( "No debería existir una reserva en la Ciudad No Existente.", reserva );
+    }
+
+    /**
+     * Prueba 9: Se encarga de verificar el método buscarReservaMasPersonas de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservaMasPersonas<br>
+     * agregarReserva<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Busca la reserva con mayor cantidad de personas que van a viajar.<br>
+     */
+    public void testBuscarReservaMasPersonas( )
+    {
+        setupEscenario3( );
+
+        ReservaViaje reserva = cupiViajes.buscarReservaMasPersonas( );
+        assertEquals( "La reserva con mayor cantidad de personas es la del cliente cliente3.", "Cliente3", reserva.darNombreCliente( ) );
+
+        cupiViajes.agregarReserva( new Hotel( "Nombre", "Ciudad", 5, 120000, "Imagen" ), 5, 1, 2016, "Cliente4", 4, 4, 2, ReservaViaje.LAN );
+        reserva = cupiViajes.buscarReservaMasPersonas( );
+        assertEquals( "La reserva con mayor cantidad de personas es la del cliente cliente4.", "Cliente4", reserva.darNombreCliente( ) );
+    }
+
+    /**
+     * Prueba 10: Se encarga de verificar el método buscarReservaMenosPersonas de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservaMenosPersonas<br>
+     * agregarReserva<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Busca la reserva con menor cantidad de personas que van a viajar.<br>
+     */
+    public void testBuscarReservaMenosPersonas( )
+    {
+        setupEscenario3( );
+
+        ReservaViaje reserva = cupiViajes.buscarReservaMenosPersonas( );
+        assertEquals( "La reserva con menor cantidad de personas es la del cliente cliente1.", "Cliente1", reserva.darNombreCliente( ) );
+
+        cupiViajes.agregarReserva( new Hotel( "Nombre", "Ciudad", 5, 120000, "Imagen" ), 1, 0, 2016, "Cliente4", 4, 4, 2, ReservaViaje.LAN );
+        reserva = cupiViajes.buscarReservaMasPersonas( );
+        assertEquals( "La reserva con menor cantidad de personas es la del cliente cliente4.", "Cliente4", reserva.darNombreCliente( ) );
+    }
+
+    /**
+     * Prueba 11: Se encarga de verificar el método buscarReservaAerolinea de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservaAerolinea<br>
+     * agregarReserva<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. No existen reservas para la aerolínea dada.<br>
+     * 2. Existen reservas para la aerolínea dada.
+     */
+    public void testBuscarReservasAerolinea( )
+    {
+        setupEscenario3( );
+
+        // Caso de prueba 1.
+        ArrayList reservas = cupiViajes.buscarReservasAerolinea( ReservaViaje.SATENA );
+        assertEquals( "No debería haber reservas con esa aerolínea.", 0, reservas.size( ) );
+
+        // Caso de prueba 2.
+        reservas = cupiViajes.buscarReservasAerolinea( ReservaViaje.AVIANCA );
+        assertEquals( "Hay dos reservas con esa aerolínea.", 2, reservas.size( ) );
+
+        cupiViajes.agregarReserva( new Hotel( "Nombre", "Ciudad", 5, 120000, "Imagen" ), 1, 0, 2016, "Cliente4", 4, 4, 2, ReservaViaje.LAN );
+        cupiViajes.agregarReserva( new Hotel( "Nombre", "Ciudad", 5, 120000, "Imagen" ), 1, 0, 2016, "Cliente5", 4, 4, 2, ReservaViaje.LAN );
+        reservas = cupiViajes.buscarReservasAerolinea( ReservaViaje.LAN );
+        assertEquals( "Hay tres reservas con esa aerolínea.", 3, reservas.size( ) );
+
+    }
+
+    /**
+     * Prueba 12: Se encarga de verificar el método ordenarReservasPorCosto de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservasPorCosto<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Las reservas no están ordenadas por costo.<br>
+     */
+    public void testOrdenarReservasPorCosto( )
+    {
+        setupEscenario3( );
+
+        cupiViajes.ordenarReservasPorCosto( );
+        ArrayList reservas = cupiViajes.darReservas( );
+
+        for( int i = 1; i < reservas.size( ); i++ )
+        {
+            ReservaViaje reserva1 = ( ReservaViaje )reservas.get( i - 1 );
+            ReservaViaje reserva2 = ( ReservaViaje )reservas.get( i );
+            assertTrue( "Las reservas no quedaron ordenadas correctamente.", reserva1.compararPorCostoTotal( reserva2 ) < 1 );
+        }
+
+    }
+
+    /**
+     * Prueba 13: Se encarga de verificar el método ordenarReservasPorFechaLlegada de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservasPorFechaLlegada<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Las reservas no están ordenadas por fecha de llegada.<br>
+     */
+    public void testOrdenarReservasPorFechaLlegada( )
+    {
+        setupEscenario3( );
+
+        cupiViajes.ordenarReservasPorFechaLlegada( );
+        ArrayList reservas = cupiViajes.darReservas( );
+
+        for( int i = 1; i < reservas.size( ); i++ )
+        {
+            ReservaViaje reserva1 = ( ReservaViaje )reservas.get( i - 1 );
+            ReservaViaje reserva2 = ( ReservaViaje )reservas.get( i );
+            assertTrue( "Las reservas no quedaron ordenadas correctamente.", reserva1.darFechaLlegada( ).comparar( reserva2.darFechaLlegada( ) ) > -1 );
+        }
+    }
+
+    /**
+     * Prueba 14: Se encarga de verificar el método ordenarReservasPorFechaLlegada de la clase.<br>
+     * <b> Métodos a probar: </b> <br>
+     * buscarReservasPorFechaLlegada<br>
+     * <b> Casos de prueba:</b><br>
+     * 1. Las reservas no están ordenadas por fecha de llegada.<br>
+     */
+    public void testOrdenarReservasPorCliente( )
+    {
+        setupEscenario3( );
+
+        cupiViajes.ordenarReservasPorCliente( );
+        ArrayList reservas = cupiViajes.darReservas( );
+
+        for( int i = 1; i < reservas.size( ); i++ )
+        {
+            ReservaViaje reserva1 = ( ReservaViaje )reservas.get( i - 1 );
+            ReservaViaje reserva2 = ( ReservaViaje )reservas.get( i );
+            assertTrue( "Las reservas no quedaron ordenadas correctamente.", reserva1.compararPorCliente( reserva2 ) < 1 );
+        }
+    }
+
+}

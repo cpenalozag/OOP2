@@ -1,0 +1,154 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación 
+ * Licenciado bajo el esquema Academic Free License version 2.1 
+ *
+ * Proyecto Cupi2 (http://cupi2.uniandes.edu.co)
+ * Ejercicio: n7_cupiViajes
+ * Autor: Equipo Cupi2 2015
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ */
+package uniandes.cupi2.cupiViajes.mundo;
+
+/**
+ * Clase que representa una fecha. <br>
+ * <b> inv: </b> <br>
+ * dia > 0 && dia <= 31. <br>
+ * mes > 0 && mes <= 12. <br>
+ * anio >= 2016 && anio <= 2019. <br>
+ */
+public class Fecha
+{
+    // -------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------
+
+    /**
+     * Día de la fecha.
+     */
+    private int dia;
+
+    /**
+     * Mes de la fecha.
+     */
+    private int mes;
+
+    /**
+     * Año de la fecha.
+     */
+    private int anio;
+
+    // -------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------
+
+    /**
+     * Inicializa la fecha con los valores dados por parámetro. <br>
+     * <b> post: </b> Los atributos dia, mes y anio fueron inicializados con los valores dados por parámetro.
+     * @param pDia El día del mes. pDia > 0 && pDia <= 31.
+     * @param pMes El mes del año. pMes > 0 && pMes <= 12.
+     * @param pAnio El año de la fecha. pAnio >= 2016 && pAnio <= 2019.
+     */
+    public Fecha( int pDia, int pMes, int pAnio )
+    {
+        dia = pDia;
+        mes = pMes;
+        anio = pAnio;
+        verificarInvariante( );
+    }
+
+    // -------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------
+
+    /**
+     * Retorna el día del mes.
+     * @return Día del mes.
+     */
+    public int darDia( )
+    {
+        return dia;
+    }
+
+    /**
+     * Retorna el mes del año.
+     * @return Mes del año.
+     */
+    public int darMes( )
+    {
+        return mes;
+    }
+
+    /**
+     * Retorna el año de la fecha.
+     * @return Año de la fecha.
+     */
+    public int darAnio( )
+    {
+        return anio;
+    }
+
+    /**
+     * Compara dos fechas. <br>
+     * @param pFecha Fecha contra la cual se está comparando. pFecha != null.
+     * @return Retorna 0 si las dos fechas son iguales. <br>
+     *         Retorna -1 si la fecha pFecha es más antigua. <br>
+     *         Retorna 1 si la fecha pFecha es más reciente. <br>
+     */
+    public int comparar( Fecha pFecha )
+    {
+        int valorComparacion = 0;
+
+        if( anio > pFecha.darAnio( ) )
+        {
+            valorComparacion = -1;
+        }
+        else if( anio < pFecha.darAnio( ) )
+        {
+            valorComparacion = 1;
+        }
+        else
+        {
+            if( mes > pFecha.darMes( ) )
+            {
+                valorComparacion = -1;
+            }
+            else if( mes < pFecha.darMes( ) )
+            {
+                valorComparacion = 1;
+            }
+            else
+            {
+                if( dia > pFecha.darDia( ) )
+                {
+                    valorComparacion = -1;
+                }
+                else if( dia < pFecha.darDia( ) )
+                {
+                    valorComparacion = 1;
+                }
+            }
+        }
+
+        return valorComparacion;
+    }
+
+    // -----------------------------------------------------------------
+    // Invariante
+    // -----------------------------------------------------------------
+
+    /**
+     * Verifica el invariante de la clase. <br>
+     * <b> inv: </b> <br>
+     * dia > 0 && dia <= 31. <br>
+     * mes > 0 && mes <= 12. <br>
+     * anio >= 2016 && anio <= 2019. <br>
+     */
+    private void verificarInvariante( )
+    {
+        assert ( dia > 0 && dia <= 31 ) : "El día debe tener un valor entre 1 y 31.";
+        assert ( mes > 0 && mes <= 12 ) : "El mes debe tener un valor entre 1 y 12.";
+        assert ( anio >= 2016 && anio <= 2019 ) : "El año debe ser mayor o igual a 2016 o menor o igual a 2019.";
+    }
+
+}

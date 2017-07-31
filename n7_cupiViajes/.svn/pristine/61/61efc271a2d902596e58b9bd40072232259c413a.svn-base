@@ -1,0 +1,336 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación 
+ * Licenciado bajo el esquema Academic Free License version 2.1 
+ *
+ * Proyecto Cupi2 (http://cupi2.uniandes.edu.co)
+ * Ejercicio: n7_cupiViajes
+ * Autor: Equipo Cupi2 2015
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ */
+package uniandes.cupi2.cupiViajes.mundo;
+
+/**
+ * Clase que representa una reserva de un viaje. <br>
+ * <b> inv: </b> <br>
+ * nombreCliente != null && nombreCliente != "". <br>
+ * cantidadAdultos >= 1. <br>
+ * nochesEstadia >= 1. <br>
+ * costoTotal > 0. <br>
+ * aerolinea pertenece a {AVIANCA, LAN, VIVA_COLOMBIA, SATENA, JETBLUE, IBERIA, AIR_FRANCE}. <br>
+ * hotel != null. <br>
+ * fechaLlegada != null. <br>
+ */
+public class ReservaViaje
+{
+    // -------------------------------------------------------------
+    // Constantes
+    // -------------------------------------------------------------
+
+    /**
+     * Constante que representa la aerolínea Avianca.
+     */
+    public final static String AVIANCA = "Avianca";
+
+    /**
+     * Constante que representa la aerolínea Lan.
+     */
+    public final static String LAN = "Lan";
+
+    /**
+     * Constante que representa la aerolínea Viva Colombia.
+     */
+    public final static String VIVA_COLOMBIA = "Viva Colombia";
+
+    /**
+     * Constante que representa la aerolínea Satena.
+     */
+    public final static String SATENA = "Satena";
+
+    /**
+     * Constante que representa la aerolínea jetBlue.
+     */
+    public final static String JETBLUE = "jetBlue";
+
+    /**
+     * Constante que representa la aerolínea Iberia.
+     */
+    public final static String IBERIA = "Iberia";
+
+    /**
+     * Constante que representa la aerolínea Air France.
+     */
+    public final static String AIR_FRANCE = "Air France";
+
+    // -------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------
+
+    /**
+     * Nombre del cliente responsable de la reserva del viaje.
+     */
+    private String nombreCliente;
+
+    /**
+     * Cantidad de adultos por los que se va a reservar el viaje.
+     */
+    private int cantidadAdultos;
+
+    /**
+     * Cantidad de niños por los que se va a reservar el viaje.
+     */
+    private int cantidadNinios;
+
+    /**
+     * Cantidad de noches de estadía en el hotel que se va a reservar.
+     */
+    private int cantidadNochesEstadia;
+
+    /**
+     * Costo total de la reserva.
+     */
+    private double costoTotal;
+
+    /**
+     * Aerolínea que se va a reservar.
+     */
+    private String aerolinea;
+
+    /**
+     * Hotel que se va a reservar.
+     */
+    private Hotel hotel;
+
+    /**
+     * Fecha de llegada al hotel que se va a reservar.
+     */
+    private Fecha fechaLlegada;
+
+    // -------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------
+
+    /**
+     * Inicializa la reserva del viaje con los valores dados por parámetro. <br>
+     * <b> post: </b> Los atributos cliente, cantidadAdultos, cantidadNinios, cantidadNochesEstadia, aerolinea, hotel y fechaLlegada fueron inicializados con los valores dados por parámetro. <br>
+     * El costo total se inicializó como el costo por noche de estadía en el hotel multiplicado por la cantidad de noches de la reserva.
+     * @param pHotel Hotel que se va a reservar. pHotel != null.
+     * @param pNombreCliente Nombre del cliente responsable de la reserva. pNombreCliente != null && pNombreCliente != "".
+     * @param pCantidadAdultos Cantidad de adultos que van a viajar. pCantidadAdultos >= 1 && pCantidadAdultos <= 6.
+     * @param pCantidadNinios Cantidad de niños que van a viajar. pCantidadNinios >= 0 && pCantidadNinios <= 4.
+     * @param pNochesEstadia Cantidad de noches de estadía en el hotel que se va a reservar. pNochesEstadia >= 1.
+     * @param pAerolinea Aerolínea que se va a reservar. pAerolinea != "" && pAerolinea pertenece a {AVIANCA, LAN, VIVA_COLOMBIA, SATENA, JETBLUE, IBERIA, AIR_FRANCE}.
+     * @param pFechaLlegada Fecha de llegada al hotel que se va a reservar. pFecha != null.
+     */
+    public ReservaViaje( String pNombreCliente, int pCantidadAdultos, int pCantidadNinios, int pNochesEstadia, String pAerolinea, Hotel pHotel, Fecha pFechaLlegada )
+    {
+        nombreCliente = pNombreCliente;
+        cantidadAdultos = pCantidadAdultos;
+        cantidadNinios = pCantidadNinios;
+        cantidadNochesEstadia = pNochesEstadia;
+        aerolinea = pAerolinea;
+        hotel = pHotel;
+        fechaLlegada = pFechaLlegada;
+        costoTotal = hotel.darCostoNoche( ) * cantidadNochesEstadia;
+        verificarInvariante( );
+    }
+
+    // -------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------
+
+    /**
+     * Retorna el nombre del cliente responsable de la reserva.
+     * @return Nombre del cliente responsable de la reserva.
+     */
+    public String darNombreCliente( )
+    {
+        return nombreCliente;
+    }
+
+    /**
+     * Retorna la cantidad de adultos por los que se va reservar el viaje.
+     * @return Cantidad de adultos por los que se va reservar el viaje.
+     */
+    public int darCantidadAdultos( )
+    {
+        return cantidadAdultos;
+    }
+
+    /**
+     * Retorna la cantidad de niños por los que se va reservar el viaje.
+     * @return Cantidad de niños por los que se va reservar el viaje.
+     */
+    public int darCantidadNinios( )
+    {
+        return cantidadNinios;
+    }
+
+    /**
+     * Retorna la cantidad de noches de estadía en el hotel que se va a reservar.
+     * @return Cantidad de noches de estadía en el hotel que se va a reservar.
+     */
+    public int darCantidadNochesEstadia( )
+    {
+        return cantidadNochesEstadia;
+    }
+
+    /**
+     * Retorna el costo total de la reserva.
+     * @return Costo total de la reserva.
+     */
+    public double darCostoTotal( )
+    {
+        return costoTotal;
+    }
+
+    /**
+     * Retorna la aerolínea que se va a reservar.
+     * @return Aerolínea que se va a reservar.
+     */
+    public String darAerolinea( )
+    {
+        return aerolinea;
+    }
+
+    /**
+     * Retorna el hotel que se va a reservar.
+     * @return Hotel del viaje que se va a reservar.
+     */
+    public Hotel darHotel( )
+    {
+        return hotel;
+    }
+
+    /**
+     * Retorna la fecha de llegada al hotel que se va a reservar.
+     * @return Fecha de llegada al hotel que se va a reservar.
+     */
+    public Fecha darFechaLlegada( )
+    {
+        return fechaLlegada;
+    }
+
+    /**
+     * Compara dos reservas por el cliente responsable.
+     * @param pReserva Reserva contra la cual se está comparando. pReserva != null.
+     * @return Retorna 0 si las reservas tienen el mismo cliente responsable. <br>
+     *         Retorna -1 si la reserva pReserva tiene un valor "MAYOR" para el cliente. <br>
+     *         Retorna 1 si la reserva pReserva tiene un valor "MENOR" para el cliente.
+     */
+    public int compararPorCliente( ReservaViaje pReserva )
+    {
+        int valorComparacion = 0;
+
+        if( nombreCliente.toLowerCase( ).compareTo( pReserva.darNombreCliente( ).toLowerCase( ) ) < 0 )
+        {
+            valorComparacion = -1;
+        }
+        else if( nombreCliente.toLowerCase( ).compareTo( pReserva.darNombreCliente( ).toLowerCase( ) ) > 0 )
+        {
+            valorComparacion = 1;
+        }
+
+        return valorComparacion;
+    }
+
+    /**
+     * Compara dos reservas por cantidad de personas que van a viajar.
+     * @param pReserva Reserva contra la cual se está comparando. pReserva != null.
+     * @return Retorna 0 si las reservas tienen la misma cantidad de personas que van a viajar. <br>
+     *         Retorna -1 si la reserva pReserva tiene MAYOR cantidad de personas que van a viajar. <br>
+     *         Retorna 1 si la reserva pReserva tiene MENOR cantidad de personas que van a viajar.
+     */
+    public int compararPorCantidadDePersonas( ReservaViaje pReserva )
+    {
+        int valorComparacion = 0;
+        int totalPersonas = cantidadAdultos + cantidadNinios;
+        int totalPersonasOtro = pReserva.darCantidadAdultos( ) + pReserva.darCantidadNinios( );
+
+        if( totalPersonas < totalPersonasOtro )
+        {
+            valorComparacion = -1;
+        }
+        else if( totalPersonas > totalPersonasOtro )
+        {
+            valorComparacion = 1;
+        }
+
+        return valorComparacion;
+    }
+
+    /**
+     * Compara dos reservas por el costo total.
+     * @param pReserva Reserva contra la cual se está comparando. pReserva != null.
+     * @return Retorna 0 si las reservas tienen el mismo costo total. <br>
+     *         Retorna -1 si la reserva pReserva tiene un costo total MAYOR. <br>
+     *         Retorna 1 si la reserva pReserva tiene un costo total MENOR.
+     */
+    public int compararPorCostoTotal( ReservaViaje pReserva )
+    {
+        int valorComparacion = 0;
+
+        if( costoTotal < pReserva.darCostoTotal( ) )
+        {
+            valorComparacion = -1;
+        }
+        else if( costoTotal > pReserva.darCostoTotal( ) )
+        {
+            valorComparacion = 1;
+        }
+
+        return valorComparacion;
+    }
+    
+    /**
+     * Retorna una cadena con el nombre del cliente y el hotel de la reserva.
+     * @return Representación de la reserva en una cadena de caracteres con el siguiente formato: <cliente> (<hotel>).
+     */
+    public String toString( )
+    {
+        return nombreCliente + " (" + hotel + ")";
+    }
+
+    // -------------------------------------------------------------
+    // Invariante
+    // -------------------------------------------------------------
+
+    /**
+     * Verifica el invariante de la clase. <br>
+     * <b> inv: </b> <br>
+     * nombreCliente != null && nombreCliente != "". <br>
+     * cantidadAdultos >= 1. <br>
+     * nochesEstadia >= 1. <br>
+     * costoTotal > 0. <br>
+     * aerolinea pertenece a {AVIANCA, LAN, VIVA_COLOMBIA, SATENA, JETBLUE, IBERIA, AIR_FRANCE}. <br>
+     * hotel != null. <br>
+     * fechaLlegada != null. <br>
+     */
+    private void verificarInvariante( )
+    {
+        assert ( nombreCliente != null && !nombreCliente.equals( "" ) ) : "El nombre del cliente responsable de la reserva debe existir.";
+        assert ( cantidadAdultos >= 1 ) : "La reserva debe tener por lo menos un adulto en el viaje.";
+        assert ( cantidadNochesEstadia >= 1 ) : "Se debe hacer la reserva por mínimo una noche.";
+        assert ( costoTotal > 0 ) : "El costo total de la reserva debe ser mayor a 0.";
+        assert ( verificarAerolinea( ) && aerolinea != null && !aerolinea.equals( "" ) ) : "La aerolínea debe pertenecer a: Avianca, Lan, Viva Colombia, Satena, jetBlue, Iberia o Air France.";
+        assert hotel != null : "La reserva debe tener un hotel asociado.";
+        assert fechaLlegada != null : "La reserva debe tener una fecha de llegada.";
+    }
+
+    /**
+     * Verifica que el nombre de la aerolínea pertenezca a las constantes de la clase.
+     * @return true si el nombre de la aerolínea pertenece a las constantes de la clase. False de lo contrario.
+     */
+    private boolean verificarAerolinea( )
+    {
+        boolean pertenece = false;
+
+        if( aerolinea.equals( AVIANCA ) || aerolinea.equals( LAN ) || aerolinea.equals( VIVA_COLOMBIA ) || aerolinea.equals( SATENA ) || aerolinea.equals( JETBLUE ) || aerolinea.equals( IBERIA ) || aerolinea.equals( AIR_FRANCE ) )
+        {
+            pertenece = true;
+        }
+
+        return pertenece;
+    }
+
+}
